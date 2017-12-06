@@ -6,11 +6,12 @@
 /*   By: rpinoit <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 14:07:30 by rpinoit           #+#    #+#             */
-/*   Updated: 2017/12/06 15:58:28 by rpinoit          ###   ########.fr       */
+/*   Updated: 2017/12/06 17:08:55 by rpinoit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
+#include	<stdio.h>
 
 void	ft_error(int n)
 {
@@ -30,27 +31,17 @@ void	ft_error(int n)
 int			main(int ac, char **av)
 {
 	int		fd;
-	char	**map;
 	int		i;
 
-	map = NULL;
 	i = 0;
 	if (ac == 2)
 	{
 		if ((fd = open(av[1], O_RDONLY)))
-		{
-			if (!(map = file_parse(fd)))
-				ft_error(4);
-		}
+			file_parse(fd);
 		else
 			ft_error(2);
 	}
 	else
 		ft_error(1);
-	while (map[i] != NULL)
-	{
-		printf("%s\n", map[i]);
-		i++;
-	}
 	return (0);
 }
