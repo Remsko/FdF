@@ -6,7 +6,7 @@
 /*   By: rpinoit <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 14:07:30 by rpinoit           #+#    #+#             */
-/*   Updated: 2017/12/06 17:08:55 by rpinoit          ###   ########.fr       */
+/*   Updated: 2017/12/06 18:37:23 by rpinoit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,7 @@ void	ft_error(int n)
 int			main(int ac, char **av)
 {
 	int		fd;
-	int		i;
 
-	i = 0;
 	if (ac == 2)
 	{
 		if ((fd = open(av[1], O_RDONLY)))
