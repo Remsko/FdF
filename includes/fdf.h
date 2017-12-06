@@ -15,8 +15,22 @@
 
 # include "../libft/get_next_line.h"
 # include "mlx.h"
+# define WIN_WIDTH 2000
+# define WIN_HEIGHT 2000
+
+typedef struct	s_mlx;
+{
+	void	*mlx;
+	void	*win;
+	void	*img;
+	char	*data;
+	int	bpp;
+	int	sline;
+	int	endian;
+	
+}		t_mlx;
 
 void	ft_error(int n);
-char	**file_parse(int fd);
+char	*read_file(int fd);
 
 #endif
