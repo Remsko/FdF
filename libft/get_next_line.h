@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpinoit <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/06 13:10:08 by rpinoit           #+#    #+#             */
-/*   Updated: 2017/12/06 15:57:23 by rpinoit          ###   ########.fr       */
+/*   Created: 2017/12/04 09:38:07 by rpinoit           #+#    #+#             */
+/*   Updated: 2017/12/06 14:00:53 by rpinoit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-# include "../libft/libft.h"
-# include "mlx.h"
+# include "libft.h"
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <fcntl.h>
+# include <unistd.h>
+# define BUFF_SIZE 32
 
-void	ft_error(int n);
-char	**file_parse(int fd);
+int	get_next_line(const int fd, char **line);
 
 #endif
