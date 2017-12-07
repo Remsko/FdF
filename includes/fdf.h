@@ -6,7 +6,7 @@
 /*   By: rpinoit <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 13:10:08 by rpinoit           #+#    #+#             */
-/*   Updated: 2017/12/07 16:12:36 by rpinoit          ###   ########.fr       */
+/*   Updated: 2017/12/07 16:42:26 by rpinoit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "../libft/get_next_line.h"
 # include "mlx.h"
-#include <stdio.h>
+# include <stdio.h>
 # define WIN_WIDTH 2000
 # define WIN_HEIGHT 2000
 # define ESC 53

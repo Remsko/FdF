@@ -6,7 +6,7 @@
 /*   By: rpinoit <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 14:07:30 by rpinoit           #+#    #+#             */
-/*   Updated: 2017/12/07 16:42:30 by rpinoit          ###   ########.fr       */
+/*   Updated: 2017/12/07 16:50:29 by rpinoit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void	ft_error(int n)
 		ft_putstr("Error : mlx_new_window failed.\n");
 	if (n == 8)
 		ft_putstr("Error : failed to malloc.\n");
-	exit(EXIT_FAILURE);	
+	exit(EXIT_FAILURE);
 }
 
-int	init_win(t_mlx *mlx, int width, int height, char *name)
+int		init_win(t_mlx *mlx, int width, int height, char *name)
 {
 	if ((mlx->mlx = mlx_init()) == NULL)
 		ft_error(5);
@@ -41,7 +41,8 @@ int	init_win(t_mlx *mlx, int width, int height, char *name)
 		ft_error(6);
 	if ((mlx->win = mlx_new_window(mlx->mlx, width, height, name)) == NULL)
 		ft_error(7);
-	mlx->data = mlx_get_data_addr(mlx->img, &mlx->bpp, &mlx->sline, &mlx->endian);
+	mlx->data = mlx_get_data_addr(mlx->img, &mlx->bpp, \
+			&mlx->sline, &mlx->endian);
 	mlx_expose_hook(mlx->win, &expose_hook, &mlx);
 	mlx_key_hook(mlx->win, &exit_hook, &mlx);
 	return (1);
@@ -49,13 +50,13 @@ int	init_win(t_mlx *mlx, int width, int height, char *name)
 
 int		main(int ac, char **av)
 {
-	t_mlx   *mlx;
+	t_mlx	*mlx;
 
 	mlx = NULL;
 	if (ac == 2)
 	{
 		if (!init_win(mlx, WIN_WIDTH, WIN_HEIGHT, av[1]))
-				return (0);
+			return (0);
 		mlx->path = av[1];
 	}
 	else
