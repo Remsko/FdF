@@ -6,12 +6,11 @@
 /*   By: rpinoit <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 14:15:55 by rpinoit           #+#    #+#             */
-/*   Updated: 2017/12/07 16:15:38 by rpinoit          ###   ########.fr       */
+/*   Updated: 2017/12/07 16:42:28 by rpinoit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
-#include	<stdio.h>
 
 t_mlx	*get_map(char *file, t_mlx *mlx)
 {

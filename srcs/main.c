@@ -6,12 +6,11 @@
 /*   By: rpinoit <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 14:07:30 by rpinoit           #+#    #+#             */
-/*   Updated: 2017/12/07 16:23:00 by rpinoit          ###   ########.fr       */
+/*   Updated: 2017/12/07 16:42:30 by rpinoit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
-#include	<stdio.h>
 
 void	ft_error(int n)
 {
