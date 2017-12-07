@@ -1,14 +1,21 @@
 NAME = fdf
-SRCS = main.c \
+SRCS = srcs/main.c \
+	   srcs/parsing.c \
+	   srcs/hook.c
 
-OBJS = $(SRCS:.c=.o)
-LIB = -L/usr/X11/lib -lmlx -lXext -lX11
-CFLAGS = -Wall -Wextra -Werror -I/usr/X11/include/
+OBJS = $(SRCS:srcs/%.c=%.o)
+LIB = -L./minilibx_macos/ -lmlx -framework OpenGL -framework Appkit -L./libft/ -lft
+CFLAGS = -Wall -Wextra -Werror
 CC = gcc
 RM = rm -f
+I = -I./includes \
+	-I./libft \
 
-$(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIB)
+$(NAME):
+	make -C libft/
+	make -C minilibx_macos/
+	$(CC) $(CFLAGS) $(I) -c $(SRCS)
+	$(CC) -o $(NAME) $(OBJS) $(LIB)
 
 all: $(NAME)
 

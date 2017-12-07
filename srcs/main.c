@@ -6,7 +6,7 @@
 /*   By: rpinoit <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 14:07:30 by rpinoit           #+#    #+#             */
-/*   Updated: 2017/12/07 14:11:20 by rpinoit          ###   ########.fr       */
+/*   Updated: 2017/12/07 16:23:00 by rpinoit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,34 +34,33 @@ void	ft_error(int n)
 	exit(EXIT_FAILURE);	
 }
 
-int	init_win(t_mlx mlx, width, height, char *name)
+int	init_win(t_mlx *mlx, int width, int height, char *name)
 {
-	if ((mlx.mlx = mlx_init()) == NULL)
+	if ((mlx->mlx = mlx_init()) == NULL)
 		ft_error(5);
-	if ((mlx.img = mlx_new_image(mlx.mlx, width, height)) == NULL)
+	if ((mlx->img = mlx_new_image(mlx->mlx, width, height)) == NULL)
 		ft_error(6);
-	if ((mlx.win = mlx_new_window(mlx.mlx, width, height)) == NULL)
+	if ((mlx->win = mlx_new_window(mlx->mlx, width, height, name)) == NULL)
 		ft_error(7);
-	mlx.data = mlx_get_data_addr(mlx.img, &mlx.bpp, &mlx.sline, &mlx.endian);
-	mlx_expose_hook(mlx.win, &expose_hook, &mlx);
-	mlx_key_hook(mlx.win, &exit_hook, &mlx);
+	mlx->data = mlx_get_data_addr(mlx->img, &mlx->bpp, &mlx->sline, &mlx->endian);
+	mlx_expose_hook(mlx->win, &expose_hook, &mlx);
+	mlx_key_hook(mlx->win, &exit_hook, &mlx);
 	return (1);
 }
 
 int		main(int ac, char **av)
 {
-	int		fd;
-	char	*file;
-	t_mlx	mlx;
+	t_mlx   *mlx;
 
+	mlx = NULL;
 	if (ac == 2)
 	{
-		if (!init_win(mlx, WIN_WIDTH, WIN_HEIGHT, av[1]);
+		if (!init_win(mlx, WIN_WIDTH, WIN_HEIGHT, av[1]))
 				return (0);
-		mlx.path = av[1];
+		mlx->path = av[1];
 	}
 	else
 		ft_error(1);
-	mlx_loop(mlx.mlx);
+	mlx_loop(mlx->mlx);
 	return (0);
 }

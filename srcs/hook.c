@@ -6,11 +6,11 @@
 /*   By: rpinoit <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/07 12:58:06 by rpinoit           #+#    #+#             */
-/*   Updated: 2017/12/07 14:11:30 by rpinoit          ###   ########.fr       */
+/*   Updated: 2017/12/07 16:19:32 by rpinoit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/fdf.h"i
+#include "../includes/fdf.h"
 
 char        *read_file(int fd)
 {
@@ -34,26 +34,25 @@ char        *read_file(int fd)
 		perror("fdf parsing error");
 		return (NULL);
 	}
-	if (!line)
+	if (!file)
 		ft_error(4);
-	return (file_map);
+	return (file);
 }
 
 int		expose_hook(void *param)
 {
-	t_map	*map;
 	t_mlx	*mlx;
 	int		fd;
 
 	mlx = (t_mlx*)param;
-	map = get_map(read_file((fd = open(mlx->path, RD_ONLY))));
-	mlx->map = map;
+	get_map(read_file((fd = open(mlx->path, O_RDONLY))), mlx);
+	return (0);
 }
 
 int		exit_hook(int keycode, void *param)
 {
 	(void)param;
-	if (keycode == 53)
+	if (keycode == ESC)
 		exit(1);
 	return (0);
 }
