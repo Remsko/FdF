@@ -6,7 +6,7 @@
 /*   By: rpinoit <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/06 14:07:30 by rpinoit           #+#    #+#             */
-/*   Updated: 2017/12/06 18:37:23 by rpinoit          ###   ########.fr       */
+/*   Updated: 2017/12/07 14:11:20 by rpinoit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void	ft_error(int n)
 		ft_putstr("Error : mlx_new_image failed.\n");
 	if (n == 7)
 		ft_putstr("Error : mlx_new_window failed.\n");
+	if (n == 8)
+		ft_putstr("Error : failed to malloc.\n");
 	exit(EXIT_FAILURE);	
 }
 
@@ -46,25 +48,20 @@ int	init_win(t_mlx mlx, width, height, char *name)
 	return (1);
 }
 
-int			main(int ac, char **av)
+int		main(int ac, char **av)
 {
 	int		fd;
-	char		*file;
-	t_mlx		mlx;
+	char	*file;
+	t_mlx	mlx;
 
 	if (ac == 2)
 	{
-		if ((fd = open(av[1], O_RDONLY)))
-		{
-			if (!(file = (read_file(fd))))
+		if (!init_win(mlx, WIN_WIDTH, WIN_HEIGHT, av[1]);
 				return (0);
-		}
-		else
-			ft_error(2);
+		mlx.path = av[1];
 	}
 	else
 		ft_error(1);
-	if (!init_win(mlx, WIN_WIDTH, WIN_HEIGHT, av[1]);
 	mlx_loop(mlx.mlx);
 	return (0);
 }
