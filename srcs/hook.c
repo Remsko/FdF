@@ -5,27 +5,29 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpinoit <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/07 12:58:06 by rpinoit           #+#    #+#             */
-/*   Updated: 2017/12/07 16:47:23 by rpinoit          ###   ########.fr       */
+/*   Created: 2017/12/11 16:48:32 by rpinoit           #+#    #+#             */
+/*   Updated: 2017/12/14 18:06:46 by rpinoit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-int		expose_hook(void *param)
+int     expose_hook(void *param)
 {
-	t_mlx	*mlx;
-	int		fd;
+	t_env   *env;
 
-	mlx = (t_mlx*)param;
-	get_map(read_file((fd = open(mlx->path, O_RDONLY))), mlx);
+	env = (t_env*)param;
+	read_file(env->path, env);
+	projection_iso(env);
+	drawer(env);
+	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
 	return (0);
 }
 
-int		exit_hook(int keycode, void *param)
+int     exit_hook(int keycode, void *param)
 {
 	(void)param;
 	if (keycode == ESC)
-		exit(1);
+		exit(EXIT_SUCCESS);
 	return (0);
 }

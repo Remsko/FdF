@@ -5,46 +5,61 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rpinoit <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/06 13:10:08 by rpinoit           #+#    #+#             */
-/*   Updated: 2017/12/07 16:42:26 by rpinoit          ###   ########.fr       */
+/*   Created: 2017/12/11 15:52:57 by rpinoit           #+#    #+#             */
+/*   Updated: 2017/12/14 18:19:17 by rpinoit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FDF_H
 # define FDF_H
 
-# include "../libft/get_next_line.h"
+# include "../libft/libft.h"
 # include "mlx.h"
 # include <stdio.h>
-# define WIN_WIDTH 2000
-# define WIN_HEIGHT 2000
+# include <math.h>
+
+# define WIN_WIDTH 1366
+# define WIN_HEIGHT 768
 # define ESC 53
 
-typedef struct	s_point
+typedef struct		s_point
 {
-	int			x;
-	int			y;
-	int			z;
-}				t_point;
+	double x;
+	double y;
+}					t_point;
 
-typedef struct	s_mlx
+typedef struct		s_map
 {
-	void		*mlx;
-	void		*win;
-	void		*img;
-	char		*data;
-	char		*path;
-	int			bpp;
-	int			sline;
-	int			endian;
-	t_point		*map;
-	int			size;
-}				t_mlx;
+	double	x;
+	double	y;
+	double	z;
+	int		color;
+	t_point	proj;
+	t_point	min;
+	t_point max;
+}					t_map;
 
-t_mlx			*get_map(char *file, t_mlx *mlx);
-int				exit_hook(int keycode, void *param);
-int				expose_hook(void *param);
-void			ft_error(int n);
-char			*read_file(int fd);
+typedef struct		s_env
+{
+	void			*mlx;
+	void			*win;
+	void			*img;
+	char			*data;
+	char			*path;
+	int				bpp;
+	int				sline;
+	int				endian;
+	t_map			**map;
+	int				width;
+	int				height;
+}					t_env;
+
+int					expose_hook(void *param);
+int					exit_hook(int keycode, void *param);
+t_env				*read_file(char *path, t_env *env);
+void				ft_error(int n);
+int					init_win(t_env *env, int width, int height, char *name);
+void				drawer(t_env *env);
+void				projection_iso(t_env *env);
 
 #endif
