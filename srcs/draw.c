@@ -6,7 +6,7 @@
 /*   By: rpinoit <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/14 16:22:36 by rpinoit           #+#    #+#             */
-/*   Updated: 2017/12/18 14:55:41 by rpinoit          ###   ########.fr       */
+/*   Updated: 2017/12/18 17:07:02 by rpinoit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,22 +35,29 @@ void	ft_normalize(t_points *points, t_env *env)
 	points->project.x = ((points->project.x - min->x) / (max->x - min->x)) *
 		(WIN_WIDTH - 1);
 	points->project.y = ((points->project.y - min->y) / (max->y - min->y)) *
-		(WIN_HEIGHT - 1);
+		(WIN_HEIGHT -1);
 }
 
 void	draw_line(t_env *env, t_points *a, t_points *b)
 {
-	int i;
-	int step;
+	int			i;
+	int			step;
+	t_pos		d;
+	t_pos		incr;
+	t_points	pts;
 
 	i = 0;
-	(void)env;
-	step = fabs(b->project.x - a->project.x) > fabs(b->project.y - a->project.y) ? fabs(b->project.x - a->project.x) : fabs(b->project.y - b->project.y);
+	d.x = b->project.x - a->project.x;
+	d.y = b->project.y - a->project.y;
+	step = fabs(d.x) > fabs(d.y) ? fabs(d.x) : fabs(d.y);
+	incr.x = d.x / (double)step;
+	incr.y = d.y / (double)step;
+	pts = *a;
 	while (i++ < step)
 	{
-		a->project.x += (b->project.x - a->project.x) / (float)step;
-		a->project.y += (b->project.y - a->project.y) / (float)step;
-		put_pixel(env, a);
+		pts.project.x += incr.x;
+		pts.project.y += incr.y;
+		put_pixel(env, &pts);
 	}
 }
 
@@ -70,7 +77,7 @@ void	drawer(t_env *env)
 			ft_normalize(&map[y][x], env);
 			if (x > 0)
 				draw_line(env, &map[y][x], &map[y][x - 1]);
-			if (y < 0)
+			if (y > 0)
 				draw_line(env, &map[y][x], &map[y - 1][x]);
 			y++;
 		}

@@ -6,7 +6,7 @@
 /*   By: rpinoit <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:52:58 by rpinoit           #+#    #+#             */
-/*   Updated: 2017/12/18 14:55:55 by rpinoit          ###   ########.fr       */
+/*   Updated: 2017/12/18 17:06:52 by rpinoit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ t_map	*read_file(char *path, t_env *env)
 	t_map	*map;
 	int		fd;
 
-	printf("%s", path);
 	if ((fd = open(path, O_RDONLY)) <= 0)
 		ft_error(2);
 	if (!(map = (t_map*)malloc(sizeof(t_map))))
