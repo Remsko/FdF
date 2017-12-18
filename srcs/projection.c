@@ -6,13 +6,13 @@
 /*   By: rpinoit <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/14 15:06:04 by rpinoit           #+#    #+#             */
-/*   Updated: 2017/12/18 15:29:12 by rpinoit          ###   ########.fr       */
+/*   Updated: 2017/12/18 19:06:30 by rpinoit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-static void	get_extremum(t_map *map, t_points *proj)
+static void		get_extremum(t_map *map, t_points *proj)
 {
 	t_pos	*pos;
 
@@ -33,10 +33,10 @@ static void	get_extremum(t_map *map, t_points *proj)
 	}
 }
 
-void	projection_iso(t_map *map, t_env *env)
+void			projection_iso(t_map *map, t_env *env)
 {
-	int			 x;
-	int 		y;
+	int			x;
+	int			y;
 	t_points	*proj;
 	t_pos		*pos;
 
@@ -49,7 +49,8 @@ void	projection_iso(t_map *map, t_env *env)
 			proj = &map->points[y][x];
 			pos = &proj->project;
 			pos->x = (sqrt(2) / 2.0) * (proj->x - proj->y);
-			pos->y = (-sqrt(2 / 3.0) * proj->z) - ((1.0 / sqrt(6)) * (proj->x + proj->y));
+			pos->y = (-sqrt(2 / 3.0) * proj->z) - ((1.0 / sqrt(6)) \
+					* (proj->x + proj->y));
 			get_extremum(map, proj);
 			y++;
 		}

@@ -6,27 +6,28 @@
 /*   By: rpinoit <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:52:58 by rpinoit           #+#    #+#             */
-/*   Updated: 2017/12/18 17:06:52 by rpinoit          ###   ########.fr       */
+/*   Updated: 2017/12/18 19:05:15 by rpinoit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-static int	check_map(char *z)
+static int		check_map(char *z)
 {
 	int	i;
 
 	i = ft_strlen(z);
-	if ((i > 0 && ft_isdigit(z[0])) || (z[0] == '-' && i > 1 && ft_isdigit(z[1])))
-			return (1);
+	if ((i > 0 && ft_isdigit(z[0])) || (z[0] == '-' && i > 1 \
+				&& ft_isdigit(z[1])))
+		return (1);
 	else
-			return (0);
+		return (0);
 }
 
-static void	get_map(t_map *map, t_list *lst, t_env *env)
+static void		get_map(t_map *map, t_list *lst, t_env *env)
 {
-	int 	x;
-	int 	y;
+	int		x;
+	int		y;
 	t_list	*tmp;
 
 	tmp = lst;
@@ -35,7 +36,8 @@ static void	get_map(t_map *map, t_list *lst, t_env *env)
 	y = -1;
 	while (lst && map)
 	{
-		if (!(map->points[++y] = (t_points*)malloc(sizeof(t_points) * env->width)))
+		if (!(map->points[++y] = (t_points*)malloc(sizeof(t_points) \
+						* env->width)))
 			ft_error(8);
 		x = -1;
 		while (++x < env->width)
@@ -51,7 +53,7 @@ static void	get_map(t_map *map, t_list *lst, t_env *env)
 	ft_lstdel(&tmp, ft_deltab);
 }
 
-static void	init_map(int fd, char *path, t_map *map, t_env *env)
+static void		init_map(int fd, char *path, t_map *map, t_env *env)
 {
 	char	**split;
 	t_list	*lst;
@@ -80,11 +82,13 @@ static void	init_map(int fd, char *path, t_map *map, t_env *env)
 	get_map(map, lst, env);
 }
 
-t_map	*read_file(char *path, t_env *env)
+t_map			*read_file(char *path, t_env *env)
 {
 	t_map	*map;
 	int		fd;
+	int		i;
 
+	i = 0;
 	if ((fd = open(path, O_RDONLY)) <= 0)
 		ft_error(2);
 	if (!(map = (t_map*)malloc(sizeof(t_map))))

@@ -6,7 +6,7 @@
 /*   By: rpinoit <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 15:52:57 by rpinoit           #+#    #+#             */
-/*   Updated: 2017/12/18 14:15:34 by rpinoit          ###   ########.fr       */
+/*   Updated: 2017/12/18 18:19:16 by rpinoit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,6 @@ int					init_win(t_env *env, int width, int height, char *name);
 void				drawer(t_env *env);
 void				projection_iso(t_map *map, t_env *env);
 void				display_img(t_env *env);
+void				free_map(t_env *env);
 
 #endif

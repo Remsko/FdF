@@ -6,13 +6,13 @@
 /*   By: rpinoit <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 17:15:43 by rpinoit           #+#    #+#             */
-/*   Updated: 2017/12/18 13:25:32 by rpinoit          ###   ########.fr       */
+/*   Updated: 2017/12/18 18:58:18 by rpinoit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-void    ft_error(int n)
+void	ft_error(int n)
 {
 	if (n == 1)
 		ft_putstr("Usage : ./fdf <filename>\n");
