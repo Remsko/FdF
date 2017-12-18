@@ -6,7 +6,7 @@
 /*   By: rpinoit <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 16:48:32 by rpinoit           #+#    #+#             */
-/*   Updated: 2017/12/14 18:06:46 by rpinoit          ###   ########.fr       */
+/*   Updated: 2017/12/18 14:21:47 by rpinoit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,14 @@
 int     expose_hook(void *param)
 {
 	t_env   *env;
+	t_map	*map;
 
 	env = (t_env*)param;
-	read_file(env->path, env);
-	projection_iso(env);
+	map = read_file(env->path, env);
+	env->map = map;
+	projection_iso(map, env);
 	drawer(env);
-	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
+	display_img(env);
 	return (0);
 }
 

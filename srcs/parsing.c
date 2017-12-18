@@ -6,28 +6,11 @@
 /*   By: rpinoit <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:52:58 by rpinoit           #+#    #+#             */
-/*   Updated: 2017/12/14 18:37:47 by rpinoit          ###   ########.fr       */
+/*   Updated: 2017/12/18 14:55:55 by rpinoit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
-
-static int	get_color(char *str)
-{
-	int color;
-
-	color = 0;
-	while (*str)
-	{
-		if (*str == ',')
-			color = ft_atoi_base(str + 1, 10);
-		else
-			str++;
-	}
-	if (color < 0 || color > (255 * 255 * 255))
-		ft_error(4);
-	return (color);
-}
 
 static int	check_map(char *z)
 {
@@ -40,36 +23,35 @@ static int	check_map(char *z)
 			return (0);
 }
 
-static void	get_map(t_list *lst, t_env *env)
+static void	get_map(t_map *map, t_list *lst, t_env *env)
 {
 	int 	x;
 	int 	y;
 	t_list	*tmp;
 
 	tmp = lst;
-	if (!(env->map = (t_map**)malloc(sizeof(t_map*) * env->height)))
+	if (!(map->points = (t_points**)malloc(sizeof(t_points*) * env->height)))
 		ft_error(8);
 	y = -1;
-	while (lst && env->map && ++y < env->width)
+	while (lst && map)
 	{
-		if (!(env->map[y] = (t_map*)malloc(sizeof(t_map) * env->width)))
+		if (!(map->points[++y] = (t_points*)malloc(sizeof(t_points) * env->width)))
 			ft_error(8);
 		x = -1;
 		while (++x < env->width)
 		{
-			env->map[y][x].x = x * 10;
-			env->map[y][x].y = y * 10;
+			map->points[y][x].x = x * 10;
+			map->points[y][x].y = y * 10;
 			if (!(check_map(((char**)lst->content)[0])))
 				ft_error(4);
-			env->map[y][x].z = ft_atoi(((char**)lst->content)[x]) * 10;
-			env->map[y][x].color = get_color(((char**)lst->content)[x]);
+			map->points[y][x].z = ft_atoi(((char**)lst->content)[x]) * 10;
 		}
 		lst = lst->next;
 	}
 	ft_lstdel(&tmp, ft_deltab);
 }
 
-static void	init_map(int fd, char *path, t_env *env)
+static void	init_map(int fd, char *path, t_map *map, t_env *env)
 {
 	char	**split;
 	t_list	*lst;
@@ -95,19 +77,23 @@ static void	init_map(int fd, char *path, t_env *env)
 			lst->content = (void*)split;
 		}
 	}
-	get_map(lst, env);
+	get_map(map, lst, env);
 }
 
-t_env	*read_file(char *path, t_env *env)
+t_map	*read_file(char *path, t_env *env)
 {
+	t_map	*map;
 	int		fd;
 
+	printf("%s", path);
 	if ((fd = open(path, O_RDONLY)) <= 0)
 		ft_error(2);
-	if (!(env = (t_env*)malloc(sizeof(t_env))))
+	if (!(map = (t_map*)malloc(sizeof(t_map))))
 		ft_error(8);
-	init_map(fd, path, env);
+	init_map(fd, path, map, env);
+	if (env->height <= 1)
+		ft_error(4);
 	if (close(fd) == -1)
 		ft_error(9);
-	return (env);
+	return (map);
 }

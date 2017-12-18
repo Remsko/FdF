@@ -6,7 +6,7 @@
 /*   By: rpinoit <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 17:14:35 by rpinoit           #+#    #+#             */
-/*   Updated: 2017/12/14 18:27:42 by rpinoit          ###   ########.fr       */
+/*   Updated: 2017/12/18 14:26:13 by rpinoit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,14 @@ int     init_win(t_env *env, int width, int height, char *name)
 		ft_error(6);
 	if (!(env->win = mlx_new_window(env->mlx, width, height, name)))
 		ft_error(7);
+	env->path = name;
 	env->data = mlx_get_data_addr(env->img, &env->bpp, &env->sline, &env->endian);
-	mlx_expose_hook(env->win, &expose_hook, &env);
-	mlx_key_hook(env->win, &exit_hook, &env);
+	mlx_expose_hook(env->win, &expose_hook, (void*)env);
+	mlx_key_hook(env->win, &exit_hook, (void*)env);
 	return (1);
+}
+
+void	display_img(t_env *env)
+{
+	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
 }

@@ -9,7 +9,7 @@ SRCS = srcs/main.c \
 
 OBJS = $(SRCS:srcs/%.c=%.o)
 LIB = -L./minilibx_macos/ -lmlx -framework OpenGL -framework Appkit -L./libft/ -lft
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 CC = gcc
 RM = rm -f
 I = -I./includes \

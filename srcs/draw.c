@@ -6,49 +6,50 @@
 /*   By: rpinoit <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/14 16:22:36 by rpinoit           #+#    #+#             */
-/*   Updated: 2017/12/14 18:32:05 by rpinoit          ###   ########.fr       */
+/*   Updated: 2017/12/18 14:55:41 by rpinoit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-void	put_pixel(t_env *env, t_map *map)
+void	put_pixel(t_env *env, t_points *points)
 {
 	int pts;
 	int color;
 
-	color = map->color ? map->color : 0x00FFFFFF;
-	pts = (floor(map->proj.x) * env->bpp / 8) + (floor(map->proj.y) * env->sline);
+	color = 0x00FFFFFF;
+	pts = (floor(points->project.x) * env->bpp / 8) + (floor(points->project.y) * env->sline);
 	env->data[pts++] = mlx_get_color_value(env->mlx, color);
 	env->data[pts++] = mlx_get_color_value(env->mlx, color >> 8);
 	env->data[pts++] = mlx_get_color_value(env->mlx, color >> 16);
 	env->data[pts++] = mlx_get_color_value(env->mlx, color >> 20);
 }
 
-void	ft_normalize(t_env *env, int x, int y)
+void	ft_normalize(t_points *points, t_env *env)
 {
-	t_point *min;
-	t_point *max;
+	t_pos *min;
+	t_pos *max;
 
-	min = &env->map[y][x].min;
-	max = &env->map[y][x].max;
-	env->map[y][x].proj.x = ((env->map[y][x].proj.x - min->x) / (max->x - min->x)) *
+	min = &env->map->min;
+	max = &env->map->max;
+	points->project.x = ((points->project.x - min->x) / (max->x - min->x)) *
 		(WIN_WIDTH - 1);
-	env->map[y][x].proj.y = ((env->map[y][x].proj.y - min->y) / (max->y - min->y)) *
+	points->project.y = ((points->project.y - min->y) / (max->y - min->y)) *
 		(WIN_HEIGHT - 1);
 }
 
-void	draw_line(t_env *env, t_map *a, t_map *b)
+void	draw_line(t_env *env, t_points *a, t_points *b)
 {
 	int i;
 	int step;
 
 	i = 0;
-	step = fabs(b->proj.x - a->proj.x) > fabs(b->proj.y - a->proj.y) ? fabs(b->proj.x - a->proj.x) : fabs(b->proj.y - b->proj.y);
-	while (i < step)
+	(void)env;
+	step = fabs(b->project.x - a->project.x) > fabs(b->project.y - a->project.y) ? fabs(b->project.x - a->project.x) : fabs(b->project.y - b->project.y);
+	while (i++ < step)
 	{
-		a->proj.x += (b->proj.x - a->proj.x) / (float)step;
-		a->proj.y += (b->proj.y - a->proj.y) / (float)step;
+		a->project.x += (b->project.x - a->project.x) / (float)step;
+		a->project.y += (b->project.y - a->project.y) / (float)step;
 		put_pixel(env, a);
 	}
 }
@@ -57,18 +58,22 @@ void	drawer(t_env *env)
 {
 	int	x;
 	int y;
+	t_points **map;
 
-	y = -1;
-	while (++y < env->height)
+	map = env->map->points;
+	x = 0;
+	while (x < env->width)
 	{
-		x = -1;
-		while (++x < env->width)
+		y = 0;
+		while (y < env->height)
 		{
-			ft_normalize(env, x, y);
+			ft_normalize(&map[y][x], env);
 			if (x > 0)
-				draw_line(env, &env->map[y][x], &env->map[y][x - 1]);
+				draw_line(env, &map[y][x], &map[y][x - 1]);
 			if (y < 0)
-				draw_line(env, &env->map[y][x], &env->map[y - 1][x]);
+				draw_line(env, &map[y][x], &map[y - 1][x]);
+			y++;
 		}
+		x++;
 	}
 }

@@ -6,49 +6,53 @@
 /*   By: rpinoit <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/14 15:06:04 by rpinoit           #+#    #+#             */
-/*   Updated: 2017/12/14 18:19:56 by rpinoit          ###   ########.fr       */
+/*   Updated: 2017/12/18 14:29:07 by rpinoit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-static void	get_extremum(t_env *env,int x, int y)
+static void	get_extremum(t_map *map, t_points *proj)
 {
-	t_point	*proj;
+	t_pos	*pos;
 
-	proj = &env->map[y][x].proj;
+	pos = &proj->project;
 	if (!proj->x && !proj->y)
 	{
-		env->map[y][x].min.x = proj->x;
-		env->map[y][x].min.y = proj->y;
-		env->map[y][x].max.x = proj->x;
-		env->map[y][x].max.y = proj->y;
+		map->min.x = pos->x;
+		map->min.y = pos->y;
+		map->max.x = pos->x;
+		map->max.y = pos->y;
 	}
 	else
 	{
-		env->map[y][x].min.x = proj->x < env->map[y][x].min.x ? proj->x : env->map[y][x].min.x;
-		env->map[y][x].min.y = proj->y < env->map[y][x].min.y ? proj->y : env->map[y][x].min.y;
-		env->map[y][x].max.x = proj->x > env->map[y][x].max.x ? proj->x : env->map[y][x].max.x;
-		env->map[y][x].max.y = proj->y > env->map[y][x].max.y ? proj->y : env->map[y][x].max.y;
+		map->min.x = pos->x < map->min.x ? pos->x : map->min.x;
+		map->min.y = pos->y < map->min.y ? pos->y : map->min.y;
+		map->max.x = pos->x > map->max.x ? pos->x : map->max.x;
+		map->max.y = pos->y > map->max.y ? pos->y : map->max.y;
 	}
 }
 
-void	projection_iso(t_env *env)
+void	projection_iso(t_map *map, t_env *env)
 {
-	int x;
-	int y;
-	t_point	*proj;
+	int			 x;
+	int 		y;
+	t_points	*proj;
+	t_pos		*pos;
 
-	y = -1;
-	while (++y < env->height)
+	x = 0;
+	while (x < env->width)
 	{
-		x = -1;
-		while (++x < env->width)
+		y = 0;
+		while (y < env->height)
 		{
-			proj = &env->map[y][x].proj;
-			proj->x = (sqrt(2) / 2.0) * (env->map[y][x].x - env->map[y][x].y);
-			proj->y = (sqrt(2 / 3.0) * env->map[y][x].z) - ((1.0 / sqrt(6)) * (env->map[y][x].x + env->map[y][x].y));
-			get_extremum(env, x, y);
+			proj = &map->points[y][x];
+			pos = &proj->project;
+			pos->x = (sqrt(2) / 2.0) * (proj->x - proj->y);
+			pos->y = (-sqrt(2 / 3.0) * proj->z) - ((1.0 / sqrt(6)) * (proj->x + proj->y));
+			get_extremum(map, proj);
+			y++;
 		}
+		x++;
 	}
 }
