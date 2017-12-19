@@ -6,7 +6,7 @@
 /*   By: rpinoit <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 15:52:57 by rpinoit           #+#    #+#             */
-/*   Updated: 2017/12/18 18:19:16 by rpinoit          ###   ########.fr       */
+/*   Updated: 2017/12/19 18:03:03 by rpinoit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 typedef struct		s_pos
 {
 	double			x;
-	double 			y;
+	double			y;
 }					t_pos;
 
 typedef	struct		s_points
@@ -40,7 +40,7 @@ typedef struct		s_map
 {
 	t_points		**points;
 	t_pos			min;
-	t_pos 			max;
+	t_pos			max;
 }					t_map;
 
 typedef struct		s_env
@@ -66,6 +66,6 @@ int					init_win(t_env *env, int width, int height, char *name);
 void				drawer(t_env *env);
 void				projection_iso(t_map *map, t_env *env);
 void				display_img(t_env *env);
-void				free_map(t_env *env);
+int					init_color(double pos, double y, double x);
 
 #endif

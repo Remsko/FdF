@@ -5,7 +5,8 @@ SRCS = srcs/main.c \
 	   srcs/init.c \
 	   srcs/projection.c \
 	   srcs/error.c \
-	   srcs/draw.c
+	   srcs/draw.c \
+	   srcs/color.c
 
 OBJS = $(SRCS:srcs/%.c=%.o)
 LIB = -L./minilibx_macos/ -lmlx -framework OpenGL -framework Appkit -L./libft/ -lft

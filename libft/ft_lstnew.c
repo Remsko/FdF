@@ -6,7 +6,7 @@
 /*   By: rpinoit <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 20:49:10 by rpinoit           #+#    #+#             */
-/*   Updated: 2017/12/18 17:18:33 by rpinoit          ###   ########.fr       */
+/*   Updated: 2017/12/19 14:14:26 by rpinoit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ t_list      *ft_lstnew(void const *content, size_t content_size)
 	else
 	{
 		if ((list->content = (void *)malloc(content_size)) == NULL)
-			return (NULL);
-		if (list->content == NULL)
 			return (NULL);
 		ft_memcpy(list->content, content, content_size);
 		list->content_size = content_size;

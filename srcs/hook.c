@@ -6,19 +6,19 @@
 /*   By: rpinoit <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/11 16:48:32 by rpinoit           #+#    #+#             */
-/*   Updated: 2017/12/18 19:21:33 by rpinoit          ###   ########.fr       */
+/*   Updated: 2017/12/19 18:02:30 by rpinoit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-void    free_map(t_env *env)
+void	free_map(t_map *map, t_env *env)
 {
-	t_map   *tmp;
-	int     i;
+	t_map	*tmp;
+	int		i;
 
 	i = 0;
-	tmp = (t_map *)env->map;
+	tmp = map;
 	while (i < env->height)
 	{
 		free((void*)tmp->points[i]);
@@ -31,21 +31,20 @@ void    free_map(t_env *env)
 
 int		expose_hook(void *param)
 {
-	int		i;
-	t_env	*env;
-	t_map	*map;
+	static int	i;
+	t_env		*env;
+	t_map		*map;
 
-	i = 0;
 	env = (t_env*)param;
 	map = read_file(env->path, env);
 	env->map = map;
 	projection_iso(map, env);
 	drawer(env);
 	display_img(env);
-	if (!i)
+	if (i == 0)
 	{
-		free_map(env);
-		ft_putstr("map is free");
+		free_map(map, env);
+		i = 1;
 	}
 	return (0);
 }

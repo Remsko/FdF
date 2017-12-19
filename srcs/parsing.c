@@ -6,7 +6,7 @@
 /*   By: rpinoit <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/13 14:52:58 by rpinoit           #+#    #+#             */
-/*   Updated: 2017/12/18 19:05:15 by rpinoit          ###   ########.fr       */
+/*   Updated: 2017/12/19 17:35:55 by rpinoit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void		get_map(t_map *map, t_list *lst, t_env *env)
 			map->points[y][x].y = y * 10;
 			if (!(check_map(((char**)lst->content)[0])))
 				ft_error(4);
-			map->points[y][x].z = ft_atoi(((char**)lst->content)[x]) * 10;
+			map->points[y][x].z = ft_atoi(((char**)lst->content)[x]) * 20;
 		}
 		lst = lst->next;
 	}
@@ -67,7 +67,7 @@ static void		init_map(int fd, char *path, t_map *map, t_env *env)
 		if (env->height++ == 0)
 		{
 			env->width = ft_tablen(split);
-			if (!(lst = ft_lstnew(&split, sizeof(char**))))
+			if (!(lst = ft_lstnew(NULL, sizeof(char**))))
 				ft_error(8);
 			lst->content = (void*)split;
 		}
@@ -75,7 +75,7 @@ static void		init_map(int fd, char *path, t_map *map, t_env *env)
 		{
 			if (ft_tablen(split) != env->width)
 				ft_error(8);
-			ft_lstadd(&lst, ft_lstnew(&split, sizeof(char**)));
+			ft_lstadd(&lst, ft_lstnew(NULL, sizeof(char**)));
 			lst->content = (void*)split;
 		}
 	}

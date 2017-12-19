@@ -6,7 +6,7 @@
 /*   By: rpinoit <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/14 16:22:36 by rpinoit           #+#    #+#             */
-/*   Updated: 2017/12/18 19:08:47 by rpinoit          ###   ########.fr       */
+/*   Updated: 2017/12/19 18:01:00 by rpinoit          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	put_pixel(t_env *env, t_points *points)
 	int pts;
 	int color;
 
-	color = 0x00FFFFFF;
+	color = init_color(points->z, points->project.y, points->project.x);
 	pts = (floor(points->project.x) * env->bpp / 8) + \
 		(floor(points->project.y) * env->sline);
 	env->data[pts++] = mlx_get_color_value(env->mlx, color);
